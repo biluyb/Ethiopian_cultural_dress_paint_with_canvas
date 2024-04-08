@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      canvas {
+        border: 1px solid rgb(226, 169, 11);
+        background-color: #e4e0d8; /* Ethiopian cultural cloth color */
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="dressCanvas" width="750" height="750"></canvas>
+
+    <script>
+      function drawDiamond(context, x, y, width, height, color) {
+        context.save();
+        context.beginPath();
+        context.moveTo(x, y);
+        context.lineTo(x - width / 2, y + height / 2);
+        context.lineTo(x, y + height);
+        context.lineTo(x + width / 2, y + height / 2);
+        context.closePath();
+        context.fillStyle = color;
+        context.fill();
+        context.restore();
+      }
+
+      function drawCircle(context, x, y, radius, color) {
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI);
+        context.fillStyle = color;
+        context.fill();
+        context.closePath();
+      }
+
+      function drawRectangle(context, x, y, width, height, color) {
+        context.fillStyle = color;
+        context.fillRect(x, y, width, height);
+      }
+
+      window.addEventListener("load", () => {
+        const canvas = document.getElementById("dressCanvas");
+        const context = canvas.getContext("2d");
+
+        // Draw necklines
+        context.strokeStyle = "white";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(224, 100);
+        context.quadraticCurveTo(347, 180, 475, 100);
+        context.stroke();
+
+        context.strokeStyle = "#FFD966"; // Yellow
+        context.beginPath();
+        context.moveTo(260, 65);
+        context.quadraticCurveTo(320, 130, 440, 65);
+        context.stroke();
+
+        // Draw remaining lines
+        const lines = [
+          { start: [260, 65], end: [180, 140] },
+          { start: [440, 65], end: [520, 140] },
+          { start: [180, 140], end: [240, 200] },
+          { start: [520, 140], end: [460, 200] },
+          { start: [230, 140], end: [270, 390] },
+          { start: [470, 140], end: [430, 390] },
+          { start: [270, 390], end: [140, 690] },
+          { start: [430, 390], end: [530, 690] },
+        ];
+
+        context.strokeStyle = "#973D2F"; // Red
+        context.lineWidth = 2;
+        lines.forEach((line) => {
+          context.beginPath();
+          context.moveTo(line.start[0], line.start[1]);
+          context.lineTo(line.end[0], line.end[1]);
+          context.stroke();
+        });
+
+        // Draw designs
+        const designs = [
+          {
+            type: "diamond",
+            x: 345,
+            y: 440,
+            width: 30,
+            height: 35,
+            color: "#FFD966",
+          }, // Yellow
+          { type: "circle", x: 315, y: 440, radius: 3, color: "#FFD966" }, // Yellow
+          { type: "circle", x: 298, y: 456, radius: 3, color: "#FFD966" }, // Yellow
+          { type: "circle", x: 315, y: 475, radius: 3, color: "#FF6347" }, // Red
+          { type: "circle", x: 390, y: 456, radius: 3, color: "#FFD966" }, // Yellow
+          { type: "circle", x: 375, y: 440, radius: 3, color: "#FFD966" }, // Yellow
+          { type: "circle", x: 345, y: 405, radius: 3, color: "#FFD966" }, // Yellow
+          { type: "circle", x: 375, y: 475, radius: 3, color: "#FF6347" }, // Red
+          { type: "circle", x: 362, y: 492, radius: 3, color: "#FFD966" }, // Yellow
+          { type: "circle", x: 328, y: 492, radius: 3, color: "#FFD966" }, // Yellow
+          { type: "circle", x: 328, y: 422, radius: 3, color: "#FFD966" }, // Yellow
+          { type: "circle", x: 362, y: 422, radius: 3, color: "#FF6347" }, // Red
+          {
+            type: "diamond",
+            x: 345,
+            y: 512,
+            width: 20,
+            height: 20,
+            color: "#FFD966",
+          }, // Yellow
+          {
+            type: "diamond",
+            x: 345,
+            y: 535,
+            width: 20,
+            height: 20,
+            color: "#000000",
+          }, // Black
+          {
+            type: "diamond",
+            x: 345,
+            y: 557,
+            width: 20,
+            height: 20,
+            color: "#FFFFFF",
+          }, // White
+          {
+            type: "diamond",
+            x: 345,
+            y: 577,
+            width: 30,
+            height: 35,
+            color: "#000000",
+          }, // Black
+          {
+            type: "diamond",
+            x: 345,
+            y: 597,
+            width: 30,
+            height: 35,
+            color: "#FFD966",
+          }, // Yellow
+          {
+            type: "diamond",
+            x: 345,
+            y: 605,
+            width: 15,
+            height: 17.5,
+            color: "#FF6347",
+          }, // Red
+          // Add more designs here...
+        ];
+
+        designs.forEach((design) => {
+          if (design.type === "diamond") {
+            drawDiamond(
+              context,
+              design.x,
+              design.y,
+              design.width,
+              design.height,
+              design.color
+            );
+          } else if (design.type === "circle") {
+            drawCircle(
+              context,
+              design.x,
+              design.y,
+              design.radius,
+              design.color
+            );
+          }
+        });
+
+        // Draw rectangles
+        for (let i = 0; i < 20; i++) {
+          drawRectangle(
+            context,
+            280,
+            150 + i * 10,
+            20,
+            10,
+            i % 2 === 0 ? "#FFFFFF" : "#663399"
+          ); // White and Ethiopian dress color
+        }
+
+        // Draw triple diamonds
+        const tripleDiamonds = [
+          { x: 325, y: 150, width: 40, height: 40, color: "#FFD966" }, // Yellow
+          { x: 325, y: 210, width: 40, height: 40, color: "#FFD966" }, // Yellow
+
+          { x: 325, y: 270, width: 40, height: 40, color: "#FFD966" }, // Yellow
+          { x: 325, y: 330, width: 40, height: 40, color: "#FFD966" }, // Yellow
+          // Add more triple diamonds here...
+        ];
+
+        tripleDiamonds.forEach((diamond) => {
+          drawDiamond(
+            context,
+            diamond.x,
+            diamond.y,
+            diamond.width,
+            diamond.height,
+            diamond.color
+          );
+          drawDiamond(context, diamond.x, diamond.y + 10, 20, 20, "#FFD966"); // Yellow
+          drawDiamond(context, diamond.x, diamond.y + 15, 10, 10, "#FF6347"); // Red
+        });
+
+        // Draw connecting diamonds
+        const connectingDiamonds = [
+          { x: 325, y: 190 },
+          { x: 325, y: 250 },
+          { x: 325, y: 310 },
+          // Add more connecting diamonds here...
+        ];
+
+        connectingDiamonds.forEach((diamond) => {
+          drawDiamond(context, diamond.x, diamond.y, 10, 10, "#000000"); // Black
+          drawDiamond(context, diamond.x, diamond.y + 10, 10, 10, "#000000"); // Black
+        });
+
+        // Draw bottom closure
+        context.fillStyle = "#663399"; // Ethiopian dress color
+        context.beginPath();
+        context.moveTo(140, 690);
+        context.lineTo(256, 720);
+        context.lineTo(276, 710);
+        context.lineTo(446, 710);
+        context.lineTo(466, 720);
+        context.lineTo(530, 690);
+        context.closePath();
+        context.fill();
+      });
+    </script>
+  </body>
+</html>
